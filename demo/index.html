@@ -1,0 +1,76 @@
+<!--
+Copyright 2017 Next Century Corporation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="../detail-view.html">
+</head>
+
+<body unresolved>
+  <template is="dom-bind" id="demo">
+    <p>Button Link: https://nextcentury.com</p>
+    <p>Button Text: Open Website</p>
+    <p>Details: [[stringify(details)]]</p>
+    <p>Extractions: [[stringify(extractions)]]</p>
+    <p>Images: [[stringify(images)]]</p>
+    <p>New Tab: true</p>
+
+    <detail-view
+      button-link="https://nextcentury.com"
+      button-text="Open Website"
+      details="[[details]]"
+      extractions="[[extractions]]"
+      images="[[images]]"
+      new-tab>
+    </detail-view>
+  </template>
+
+  <script>
+    (function(document) {
+      var demo = document.querySelector('#demo');
+
+      demo.details = [{
+        name: 'Detail',
+        highlightedText: 'This is <em>highlighted<em> text.'
+      }];
+
+      demo.extractions = [{
+        name: 'Extraction',
+        data: [{
+          confidence: 'high',
+          highlight: true,
+          icon: 'link',
+          link: 'https://nextcentury.com',
+          styleClass: 'extraction-nextcentury',
+          text: 'Next Century'
+        }]
+      }];
+
+      demo.images = [{
+        link: 'https://nextcentury.com',
+        source: 'NextCentury.png'
+      }];
+
+      demo.stringify = function(object) {
+        return JSON.stringify(object);
+      };
+    })(document);
+  </script>
+</body>
+</html>

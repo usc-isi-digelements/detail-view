@@ -1,0 +1,30 @@
+{
+  "name": "detail-view",
+  "description": "A Polymer Element showing details, extractions, images, and/or a button link.",
+  "version": "1.0.0",
+  "authors": ["Next Century Corporation"],
+  "license": "Apache-2.0",
+  "keywords": [
+    "web-component",
+    "polymer"
+  ],
+  "main": "detail-view.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/DigElements/detail-view/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.7.0",
+    "button-link": "DigElements/button-link#^1.0.2",
+    "extraction-grid": "DigElements/extraction-grid#^1.0.2",
+    "highlighted-text": "DigElements/highlighted-text#^1.0.1",
+    "image-gallery": "DigElements/image-gallery#1.0.5",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.7"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.7",
+    "web-component-tester": "^5.0.0"
+  }
+}

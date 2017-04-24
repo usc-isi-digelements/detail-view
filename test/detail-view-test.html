@@ -1,0 +1,342 @@
+<!--
+Copyright 2017 Next Century Corporation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../detail-view.html">
+</head>
+
+<body>
+  <test-fixture id="detail-view-fixture">
+    <template>
+      <detail-view></detail-view>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('detail-view tests', function() {
+      var element;
+
+      setup(function(done) {
+        element = fixture('detail-view-fixture');
+        flush(done);
+      });
+
+      test('default properties are set correctly', function() {
+        expect(element.buttonLink).to.equal('');
+        expect(element.buttonText).to.equal('');
+        expect(element.details).to.deep.equal([]);
+        expect(element.detailHighlightedTextProperty).to.equal('highlightedText');
+        expect(element.detailLinkProperty).to.equal('link');
+        expect(element.detailNameProperty).to.equal('name');
+        expect(element.detailTextProperty).to.equal('text');
+        expect(element.extractions).to.deep.equal([]);
+        expect(element.extractionDataProperty).to.equal('data');
+        expect(element.extractionDataConfidenceProperty).to.equal('confidence');
+        expect(element.extractionDataHighlightProperty).to.equal('highlight');
+        expect(element.extractionDataIconProperty).to.equal('icon');
+        expect(element.extractionDataLinkProperty).to.equal('link');
+        expect(element.extractionDataStyleClassProperty).to.equal('styleClass');
+        expect(element.extractionDataTextProperty).to.equal('text');
+        expect(element.extractionNameProperty).to.equal('name');
+        expect(element.images).to.deep.equal([]);
+        expect(element.imageLinkProperty).to.equal('link');
+        expect(element.imageSourceProperty).to.equal('source');
+        expect(element.blur).to.be.false;
+        expect(element.highlightedTextTags).to.equal('em');
+        expect(element.newTab).to.be.false;
+      });
+
+      test('does not have detail element', function() {
+        expect(element.$$('.detail')).to.not.exist;
+      });
+
+      test('does not have extraction-grid element', function() {
+        expect(element.$$('extraction-grid')).to.not.exist;
+      });
+
+      test('does not have button-link element', function() {
+        expect(element.$$('button-link')).to.not.exist;
+      });
+
+      test('does not have image-gallery element', function() {
+        expect(element.$$('image-gallery')).to.not.exist;
+      });
+
+      test('_getDetailText does return correctly', function() {
+        expect(element._getDetailText).to.be.a('Function');
+        expect(element._getDetailText({}, 'highlightedText', 'text')).to.equal('None');
+        expect(element._getDetailText({
+          text: 'text'
+        }, 'highlightedText', 'text')).to.equal('text');
+        expect(element._getDetailText({
+          highlightedText: 'highlighted',
+          text: 'text'
+        }, 'highlightedText', 'text')).to.equal('highlighted');
+        expect(element._getDetailText({
+          text: ''
+        }, 'highlightedText', 'text')).to.equal('None');
+        expect(element._getDetailText({
+          text: 'text'
+        }, 'highlightedText', 'nottext')).to.equal('None');
+        expect(element._getDetailText({
+          nottext: 'text'
+        }, 'highlightedText', 'text')).to.equal('None');
+      });
+
+      test('_getLinkIcon does return correctly', function() {
+        expect(element._getLinkIcon).to.be.a('Function');
+        expect(element._getLinkIcon(true)).to.equal('open-in-new');
+        expect(element._getLinkIcon(false)).to.equal('open-in-browser');
+      });
+
+      test('_getProperty does return correctly', function() {
+        expect(element._getProperty).to.be.a('Function');
+        expect(element._getProperty({}, 'property')).to.not.exist;
+        expect(element._getProperty({
+          property: 'text'
+        }, 'notproperty')).to.not.exist;
+        expect(element._getProperty({
+          notproperty: 'text'
+        }, 'property')).to.not.exist;
+        expect(element._getProperty({
+          property: 'text'
+        }, 'property')).to.equal('text');
+        expect(element._getProperty({
+          property: 10
+        }, 'property')).to.equal(10);
+        expect(element._getProperty({
+          property: true
+        }, 'property')).to.be.true;
+        expect(element._getProperty({
+          property: [1, 2, 3, 4, 5]
+        }, 'property')).to.deep.equal([1, 2, 3, 4, 5]);
+        expect(element._getProperty({
+          property: {
+            key: 'value'
+          }
+        }, 'property')).to.deep.equal({
+          key: 'value'
+        });
+      });
+
+      test('_getPropertyAndColon does return correctly', function() {
+        expect(element._getPropertyAndColon).to.be.a('Function');
+        expect(element._getPropertyAndColon({}, 'property')).to.equal('');
+        expect(element._getPropertyAndColon({
+          property: 'text'
+        }, 'notproperty')).to.equal('');
+        expect(element._getPropertyAndColon({
+          notproperty: 'text'
+        }, 'property')).to.equal('');
+        expect(element._getPropertyAndColon({
+          property: 'text'
+        }, 'property')).to.equal('text:');
+        expect(element._getPropertyAndColon({
+          property: 10
+        }, 'property')).to.equal('10:');
+        expect(element._getPropertyAndColon({
+          property: true
+        }, 'property')).to.equal('true:');
+      });
+
+      test('_getTarget does return correctly', function() {
+        expect(element._getTarget).to.be.a('Function');
+        expect(element._getTarget(true)).to.equal('_blank');
+        expect(element._getTarget(false)).to.equal('_self');
+      });
+    });
+
+    suite('detail-view tests with details', function() {
+      var element;
+
+      setup(function(done) {
+        element = fixture('detail-view-fixture');
+        element.details = [{
+          name: 'name1',
+          link: 'link1',
+          text: 'text1'
+        }, {
+          name: 'name2',
+          highlightedText: 'highlightedText2',
+          text: 'text2'
+        }];
+        flush(done);
+      });
+
+      test('does have two detail elements', function() {
+        var details = document.querySelectorAll('.detail');
+        expect(details.length).to.equal(2);
+      });
+
+      test('does have one anchor element', function() {
+        var anchors = document.querySelectorAll('a');
+        expect(anchors.length).to.equal(1);
+        expect(anchors[0].href.indexOf('link1') >= 0).to.be.true;
+        expect(anchors[0].innerHTML).to.equal('text1');
+      });
+
+      test('does have one highlighted-text element', function() {
+        var highlightedText = document.querySelectorAll('highlighted-text');
+        expect(highlightedText.length).to.equal(1);
+        expect(highlightedText[0].tags).to.equal('em');
+        expect(highlightedText[0].text).to.equal('highlightedText2');
+      });
+
+      test('does not have extraction-grid element', function() {
+        expect(element.$$('extraction-grid')).to.not.exist;
+      });
+
+      test('does not have button-link element', function() {
+        expect(element.$$('button-link')).to.not.exist;
+      });
+
+      test('does not have image-gallery element', function() {
+        expect(element.$$('image-gallery')).to.not.exist;
+      });
+    });
+
+    suite('detail-view tests with extractions', function() {
+      var element;
+
+      setup(function(done) {
+        element = fixture('detail-view-fixture');
+        element.extractions = [{
+          name: 'name1',
+          data: [{
+            confidence: 'confidence1',
+            highlight: true,
+            icon: 'icon1',
+            link: 'link1',
+            styleClass: 'styleClass1',
+            text: 'text1'
+          }]
+        }];
+        flush(done);
+      });
+
+      test('does have extraction-grid element', function() {
+        expect(element.$$('extraction-grid')).to.exist;
+        expect(element.$$('extraction-grid').extractions).to.deep.equal([{
+          name: 'name1',
+          data: [{
+            confidence: 'confidence1',
+            highlight: true,
+            icon: 'icon1',
+            link: 'link1',
+            styleClass: 'styleClass1',
+            text: 'text1'
+          }]
+        }]);
+        expect(element.$$('extraction-grid').dataProperty).to.equal('data');
+        expect(element.$$('extraction-grid').dataConfidenceProperty).to.equal('confidence');
+        expect(element.$$('extraction-grid').dataHighlightProperty).to.equal('highlight');
+        expect(element.$$('extraction-grid').dataIconProperty).to.equal('icon');
+        expect(element.$$('extraction-grid').dataLinkProperty).to.equal('link');
+        expect(element.$$('extraction-grid').dataStyleClassProperty).to.equal('styleClass');
+        expect(element.$$('extraction-grid').dataTextProperty).to.equal('text');
+        expect(element.$$('extraction-grid').nameProperty).to.equal('name');
+        expect(element.$$('extraction-grid').target).to.equal('_self');
+      });
+
+      test('does not have detail element', function() {
+        expect(element.$$('.detail')).to.not.exist;
+      });
+
+      test('does not have button-link element', function() {
+        expect(element.$$('button-link')).to.not.exist;
+      });
+
+      test('does not have image-gallery element', function() {
+        expect(element.$$('image-gallery')).to.not.exist;
+      });
+    });
+
+    suite('detail-view tests with button', function() {
+      var element;
+
+      setup(function(done) {
+        element = fixture('detail-view-fixture');
+        element.buttonLink = 'buttonLink';
+        element.buttonText = 'buttonText';
+        flush(done);
+      });
+
+      test('does have button-link element', function() {
+        expect(element.$$('button-link')).to.exist;
+        expect(element.$$('button-link').icon).to.equal('open-in-browser');
+        expect(element.$$('button-link').link).to.equal('buttonLink');
+        expect(element.$$('button-link').target).to.equal('_self');
+        expect(element.$$('button-link').text).to.equal('buttonText');
+        expect(element.$$('button-link').show).to.be.true;
+      });
+
+      test('does not have detail element', function() {
+        expect(element.$$('.detail')).to.not.exist;
+      });
+
+      test('does not have extraction-grid element', function() {
+        expect(element.$$('extraction-grid')).to.not.exist;
+      });
+
+      test('does have image-gallery element', function() {
+        expect(element.$$('image-gallery')).to.not.exist;
+      });
+    });
+
+    suite('detail-view tests with images', function() {
+      var element;
+
+      setup(function(done) {
+        element = fixture('detail-view-fixture');
+        element.images = [{
+          link: 'link1',
+          source: 'source1'
+        }];
+        flush(done);
+      });
+
+      test('does have image-gallery element', function() {
+        expect(element.$$('image-gallery')).to.exist;
+        expect(element.$$('image-gallery').images).to.deep.equal([{
+          link: 'link1',
+          source: 'source1'
+        }]);
+        expect(element.$$('image-gallery').imageLinkProperty).to.equal('link');
+        expect(element.$$('image-gallery').imageSourceProperty).to.equal('source');
+        expect(element.$$('image-gallery').blur).to.be.false;
+        expect(element.$$('image-gallery').newTab).to.be.false;
+      });
+
+      test('does not have detail element', function() {
+        expect(element.$$('.detail')).to.not.exist;
+      });
+
+      test('does not have extraction-grid element', function() {
+        expect(element.$$('extraction-grid')).to.not.exist;
+      });
+
+      test('does not have button-link element', function() {
+        expect(element.$$('button-link')).to.not.exist;
+      });
+    });
+  </script>
+</body>
+</html>
