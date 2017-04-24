@@ -59,7 +59,8 @@ limitations under the License.
         expect(element.images).to.deep.equal([]);
         expect(element.imageLinkProperty).to.equal('link');
         expect(element.imageSourceProperty).to.equal('source');
-        expect(element.blur).to.be.false;
+        expect(element.smallImageStyleClass).to.equal('');
+        expect(element.largeImageStyleClass).to.equal('');
         expect(element.highlightedTextTags).to.equal('em');
         expect(element.newTab).to.be.false;
       });
@@ -321,7 +322,8 @@ limitations under the License.
         }]);
         expect(element.$$('image-gallery').imageLinkProperty).to.equal('link');
         expect(element.$$('image-gallery').imageSourceProperty).to.equal('source');
-        expect(element.$$('image-gallery').blur).to.be.false;
+        expect(element.$$('image-gallery').smallImageStyleClass).to.equal('');
+        expect(element.$$('image-gallery').largeImageStyleClass).to.equal('');
         expect(element.$$('image-gallery').newTab).to.be.false;
       });
 

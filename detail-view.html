@@ -111,8 +111,9 @@ A Polymer Element showing details, extractions, images, and/or a button link.
           images="[[images]]"
           image-link-property="[[imageLinkProperty]]"
           image-source-property="[[imageSourceProperty]]"
-          new-tab="[[newTab]]"
-          blur="[[blur]]">
+          small-image-style-class="[[smallImageStyleClass]]"
+          large-image-style-class="[[largeImageStyleClass]]"
+          new-tab="[[newTab]]">
         </image-gallery>
       </template>
     </paper-material>
@@ -382,14 +383,27 @@ A Polymer Element showing details, extractions, images, and/or a button link.
         /**
          * (Optional)
          *
-         * Whether to blur the images.
+         * The style class for all the images in the gallery.
          *
-         * @type {Boolean}
-         * @default false
+         * @type {String}
+         * @default ''
          */
-        blur: {
-          type: Boolean,
-          value: false
+        smallImageStyleClass: {
+          type: String,
+          value: ''
+        },
+
+        /**
+         * (Optional)
+         *
+         * The style class for any image in a popup.
+         *
+         * @type {String}
+         * @default ''
+         */
+        largeImageStyleClass: {
+          type: String,
+          value: ''
         },
 
         /**
