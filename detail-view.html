@@ -20,11 +20,36 @@ limitations under the License.
 <link rel="import" href="../highlighted-text/highlighted-text.html">
 <link rel="import" href="../image-gallery/image-gallery.html">
 <link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-styles/default-theme.html">
 
 <!--
 A Polymer Element showing details, extractions, images, and/or a button link.
 
 ### Example
+```js
+details = [{
+  name: 'Description',
+  text: 'This is a list of my favorite software projects!'
+}];
+
+extractions = [{
+  name: 'Favorite Projects',
+  data: [{
+    confidence: 'high',
+    highlight: true,
+    icon: 'search',
+    link: 'https://github.com/DigElements',
+    styleClass: 'extraction',
+    text: 'DigElements'
+  }]
+}];
+
+images = [{
+  link: 'https://github.com/DigElements',
+  source: 'dig.png'
+}];
+```
+
 ```html
 <detail-view
   button-link="https://google.com"
@@ -34,6 +59,20 @@ A Polymer Element showing details, extractions, images, and/or a button link.
   images="[[images]]">
 </detail-view>
 ```
+
+### Styling
+
+`<detail-view>` provides the following custom properties and mixins for styling:
+
+Custom property                        | Description                                 | Default
+---------------------------------------|---------------------------------------------|-----------------------
+`--detail-view-high-confidence-color`  | The color of the high confidence icon.      | none
+`--detail-view-highlighted-text-color` | The color of the highlighted text.          | none
+`--detail-view-hover-color`            | The color of the extraction label on hover. | --secondary-text-color
+`--detail-view-label-color`            | The color of the extraction label.          | --primary-text-color
+`--detail-view-label-mixin`            | Mixin applied to the extraction label.      | {}
+`--detail-view-low-confidence-color`   | The color of the low confidence icon.       | none
+`--detail-view-title-color`            | The color of the extraction title.          | --secondary-text-color
 
 @demo demo/index.html
 -->
@@ -57,6 +96,20 @@ A Polymer Element showing details, extractions, images, and/or a button link.
         word-break: break-word;
       }
 
+      .detail-name {
+        color: var(--detail-view-title-color, --secondary-text-color);
+      }
+
+      extraction-grid {
+        --extraction-grid-high-confidence-color: var(--detail-view-high-confidence-color);
+        --extraction-grid-highlighted-text-color: var(--detail-view-highlighted-text-color);
+        --extraction-grid-hover-color: var(--detail-view-hover-color, --secondary-text-color);
+        --extraction-grid-label-color: var(--detail-view-label-color, --primary-text-color);
+        --extraction-grid-label-mixin: var(--detail-view-label-mixin);
+        --extraction-grid-low-confidence-color: var(--detail-view-low-confidence-color);
+        --extraction-grid-title-color: var(--detail-view-title-color, --secondary-text-color);
+      }
+
       button-link {
         /* Margin between the button and the extractions. */
         margin-top: 10px;
@@ -71,7 +124,7 @@ A Polymer Element showing details, extractions, images, and/or a button link.
     <paper-material>
       <template is="dom-repeat" items="[[details]]" as="detail">
         <div class="detail">
-          <strong>[[_getPropertyAndColon(detail, detailNameProperty)]]</strong>
+          <strong class="detail-name">[[_getPropertyAndColon(detail, detailNameProperty)]]</strong>
           <template is="dom-if" if="[[_getProperty(detail, detailLinkProperty)]]">
             <a target="_blank" href$="[[_getProperty(detail, detailLinkProperty)]]">[[_getProperty(detail, detailTextProperty)]]</a>
           </template>
