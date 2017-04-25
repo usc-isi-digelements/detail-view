@@ -46,23 +46,51 @@ limitations under the License.
       var demo = document.querySelector('#demo');
 
       demo.details = [{
-        name: 'Detail',
-        highlightedText: 'This is <em>highlighted<em> text.'
+        name: 'Detail #1',
+        text: 'This is unhighlighted text.'
+      }, {
+        name: 'Detail #2',
+        highlightedText: 'This is <em>highlighted</em> text.'
       }];
 
       demo.extractions = [{
-        name: 'Extraction',
+        name: 'Extraction #1',
         data: [{
           confidence: 'high',
           highlight: true,
           icon: 'link',
-          link: 'https://nextcentury.com',
-          styleClass: 'extraction-nextcentury',
-          text: 'Next Century'
+          link: 'https://github.com/DigElements/detail-view',
+          text: 'Detail View'
+        }]
+      }, {
+        name: 'Extraction #2',
+        data: [{
+          confidence: 'low',
+          icon: 'touch-app',
+          link: 'https://github.com/DigElements/button-link',
+          text: 'Button Link'
+        }, {
+          confidence: 'low',
+          icon: 'apps',
+          link: 'https://github.com/DigElements/extraction-grid',
+          text: 'Extraction Grid'
+        }, {
+          confidence: 'low',
+          icon: 'text-format',
+          link: 'https://github.com/DigElements/highlighted-text',
+          text: 'Highlighted Text'
+        }, {
+          confidence: 'low',
+          icon: 'account-circle',
+          link: 'https://github.com/DigElements/image-gallery',
+          text: 'Image Gallery'
         }]
       }];
 
       demo.images = [{
+        link: 'https://github.com/DigElements',
+        source: 'dig.png'
+      }, {
         link: 'https://nextcentury.com',
         source: 'NextCentury.png'
       }];
