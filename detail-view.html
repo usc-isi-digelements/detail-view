@@ -110,13 +110,8 @@ Custom property                        | Description                            
         --extraction-grid-title-color: var(--detail-view-title-color, --secondary-text-color);
       }
 
-      button-link {
-        /* Margin between the button and the extractions. */
-        margin-top: 10px;
-      }
-
+      button-link,
       image-gallery {
-        /* Margin between the image gallery and the button. */
         margin-top: 10px;
       }
     </style>
@@ -490,8 +485,8 @@ Custom property                        | Description                            
        * Returns the highlighted text or text of the given detail or "None" by default.
        *
        * @param {Object} detail
-       * @param {String} highlightedText
-       * @param {String} text
+       * @param {String} highlightedTextProperty
+       * @param {String} textProperty
        * @return {String}
        * @private
        */

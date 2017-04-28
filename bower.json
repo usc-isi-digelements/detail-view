@@ -1,7 +1,7 @@
 {
   "name": "detail-view",
   "description": "A Polymer Element showing details, extractions, images, and/or a button link.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "authors": ["Next Century Corporation"],
   "license": "Apache-2.0",
   "keywords": [
@@ -18,7 +18,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.7.0",
     "button-link": "DigElements/button-link#^1.0.2",
-    "extraction-grid": "DigElements/extraction-grid#^1.0.4",
+    "extraction-grid": "DigElements/extraction-grid#^1.0.5",
     "highlighted-text": "DigElements/highlighted-text#^1.0.1",
     "image-gallery": "DigElements/image-gallery#1.0.6",
     "paper-elements": "PolymerElements/paper-elements#^1.0.7"
