@@ -90,7 +90,7 @@ Custom property                        | Description                            
 
       .detail {
         font-size: 14px;
-        line-height: 25px;
+        line-height: 24px;
         /* Needed to fix flexbox layout issues in newer browsers. */
         white-space: normal;
         word-break: break-word;
@@ -119,7 +119,9 @@ Custom property                        | Description                            
     <paper-material>
       <template is="dom-repeat" items="[[details]]" as="detail">
         <div class="detail">
-          <strong class="detail-name">[[_getPropertyAndColon(detail, detailNameProperty)]]</strong>
+          <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
+            <strong class="detail-name">[[_getPropertyAndColon(detail, detailNameProperty)]]</strong>
+          </template>
           <template is="dom-if" if="[[_getProperty(detail, detailLinkProperty)]]">
             <a target="_blank" href$="[[_getProperty(detail, detailLinkProperty)]]">[[_getProperty(detail, detailTextProperty)]]</a>
           </template>
