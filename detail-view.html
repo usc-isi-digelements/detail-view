@@ -126,7 +126,7 @@ Custom property                        | Description                            
       <template is="dom-repeat" items="[[details]]" as="detail">
         <div class="detail">
           <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
-            <strong class="detail-name">[[_getPropertyAndColon(detail, detailNameProperty)]]</strong>
+            <strong class="detail-name">[[_getProperty(detail, detailNameProperty)]]</strong>
           </template>
           <template is="dom-if" if="[[_getProperty(detail, detailLinkProperty)]]">
             <a target="_blank" href$="[[_getProperty(detail, detailLinkProperty)]]">[[_getProperty(detail, detailTextProperty)]]</a>
@@ -523,19 +523,6 @@ Custom property                        | Description                            
        */
       _getProperty: function(item, property) {
         return item ? item[property] : undefined;
-      },
-
-      /**
-       * Returns the string in the given item at the given property with a colon at the end of it.
-       *
-       * @param {Object} item
-       * @param {String} property
-       * @return {String}
-       * @private
-       */
-      _getPropertyAndColon: function(item, property) {
-        var output = this._getProperty(item, property);
-        return output ? output + ':' : '';
       },
 
       /**

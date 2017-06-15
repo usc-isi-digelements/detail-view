@@ -65,6 +65,10 @@ limitations under the License.
         expect(element.newTab).to.be.false;
       });
 
+      test('does have paper-material element', function() {
+        expect(element.$$('paper-material')).to.exist;
+      });
+
       test('does not have detail element', function() {
         expect(element.$$('.detail')).to.not.exist;
       });
@@ -138,26 +142,6 @@ limitations under the License.
         });
       });
 
-      test('_getPropertyAndColon does return correctly', function() {
-        expect(element._getPropertyAndColon).to.be.a('Function');
-        expect(element._getPropertyAndColon({}, 'property')).to.equal('');
-        expect(element._getPropertyAndColon({
-          property: 'text'
-        }, 'notproperty')).to.equal('');
-        expect(element._getPropertyAndColon({
-          notproperty: 'text'
-        }, 'property')).to.equal('');
-        expect(element._getPropertyAndColon({
-          property: 'text'
-        }, 'property')).to.equal('text:');
-        expect(element._getPropertyAndColon({
-          property: 10
-        }, 'property')).to.equal('10:');
-        expect(element._getPropertyAndColon({
-          property: true
-        }, 'property')).to.equal('true:');
-      });
-
       test('_getTarget does return correctly', function() {
         expect(element._getTarget).to.be.a('Function');
         expect(element._getTarget(true)).to.equal('_blank');
@@ -183,19 +167,19 @@ limitations under the License.
       });
 
       test('does have two detail elements', function() {
-        var details = document.querySelectorAll('.detail');
+        var details = Polymer.dom(element.root).querySelectorAll('.detail');
         expect(details.length).to.equal(2);
       });
 
       test('does have one anchor element', function() {
-        var anchors = document.querySelectorAll('a');
+        var anchors = Polymer.dom(element.root).querySelectorAll('a');
         expect(anchors.length).to.equal(1);
         expect(anchors[0].href.indexOf('link1') >= 0).to.be.true;
         expect(anchors[0].innerHTML).to.equal('text1');
       });
 
       test('does have one highlighted-text element', function() {
-        var highlightedText = document.querySelectorAll('highlighted-text');
+        var highlightedText = Polymer.dom(element.root).querySelectorAll('highlighted-text');
         expect(highlightedText.length).to.equal(1);
         expect(highlightedText[0].tags).to.equal('em');
         expect(highlightedText[0].text).to.equal('highlightedText2');
