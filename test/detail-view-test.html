@@ -49,13 +49,19 @@ limitations under the License.
         expect(element.detailTextProperty).to.equal('text');
         expect(element.extractions).to.deep.equal([]);
         expect(element.extractionDataProperty).to.equal('data');
+        expect(element.extractionDataClassificationsProperty).to.equal('classifications');
         expect(element.extractionDataConfidenceProperty).to.equal('confidence');
         expect(element.extractionDataHighlightProperty).to.equal('highlight');
         expect(element.extractionDataIconProperty).to.equal('icon');
+        expect(element.extractionDataIdProperty).to.equal('id');
         expect(element.extractionDataLinkProperty).to.equal('link');
+        expect(element.extractionDataProvenancesProperty).to.equal('provenances');
         expect(element.extractionDataStyleClassProperty).to.equal('styleClass');
         expect(element.extractionDataTextProperty).to.equal('text');
         expect(element.extractionNameProperty).to.equal('name');
+        expect(element.extractionProvenanceHighlightTag).to.not.exist;
+        expect(element.extractionProvenanceMethodProperty).to.equal('method');
+        expect(element.extractionProvenanceTextProperty).to.equal('text');
         expect(element.images).to.deep.equal([]);
         expect(element.imageLinkProperty).to.equal('link');
         expect(element.imageSourceProperty).to.equal('source');
@@ -63,6 +69,8 @@ limitations under the License.
         expect(element.largeImageStyleClass).to.equal('');
         expect(element.highlightedTextTags).to.equal('em');
         expect(element.newTab).to.be.false;
+        expect(element.resultId).to.equal('');
+        expect(element.tagManager).to.not.exist;
       });
 
       test('does have paper-material element', function() {
@@ -214,6 +222,13 @@ limitations under the License.
             text: 'text1'
           }]
         }];
+        element.extractionProvenanceHighlightTag = 'abcd';
+        element.resultId = '1234';
+        element.tagManager = {
+          addListener: function() {},
+          removeListener: function() {},
+          setExtractionTag: function() {}
+        };
         flush(done);
       });
 
@@ -231,13 +246,21 @@ limitations under the License.
           }]
         }]);
         expect(element.$$('extraction-grid').dataProperty).to.equal('data');
+        expect(element.$$('extraction-grid').dataClassificationsProperty).to.equal('classifications');
         expect(element.$$('extraction-grid').dataConfidenceProperty).to.equal('confidence');
         expect(element.$$('extraction-grid').dataHighlightProperty).to.equal('highlight');
         expect(element.$$('extraction-grid').dataIconProperty).to.equal('icon');
+        expect(element.$$('extraction-grid').dataIdProperty).to.equal('id');
         expect(element.$$('extraction-grid').dataLinkProperty).to.equal('link');
+        expect(element.$$('extraction-grid').dataProvenancesProperty).to.equal('provenances');
         expect(element.$$('extraction-grid').dataStyleClassProperty).to.equal('styleClass');
         expect(element.$$('extraction-grid').dataTextProperty).to.equal('text');
+        expect(element.$$('extraction-grid').highlightTag).to.equal('abcd');
         expect(element.$$('extraction-grid').nameProperty).to.equal('name');
+        expect(element.$$('extraction-grid').provenanceMethodProperty).to.equal('method');
+        expect(element.$$('extraction-grid').provenanceTextProperty).to.equal('text');
+        expect(element.$$('extraction-grid').resultId).to.equal('1234');
+        expect(element.$$('extraction-grid').tagManager).to.deep.equal(element.tagManager);
         expect(element.$$('extraction-grid').target).to.equal('_self');
       });
 

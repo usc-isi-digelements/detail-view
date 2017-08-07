@@ -30,6 +30,7 @@ limitations under the License.
     <p>Extractions: [[stringify(extractions)]]</p>
     <p>Images: [[stringify(images)]]</p>
     <p>New Tab: true</p>
+    <p>Result ID:  abcd1234</p>
 
     <detail-view
       button-link="https://nextcentury.com"
@@ -37,7 +38,8 @@ limitations under the License.
       details="[[details]]"
       extractions="[[extractions]]"
       images="[[images]]"
-      new-tab>
+      new-tab
+      result-id="abcd1234">
     </detail-view>
   </template>
 
@@ -56,7 +58,7 @@ limitations under the License.
       demo.extractions = [{
         name: 'Extraction #1',
         data: [{
-          confidence: 'high',
+          confidence: 100,
           highlight: true,
           icon: 'link',
           link: 'https://github.com/DigElements/detail-view',
@@ -65,22 +67,22 @@ limitations under the License.
       }, {
         name: 'Extraction #2',
         data: [{
-          confidence: 'low',
+          confidence: 99,
           icon: 'touch-app',
           link: 'https://github.com/DigElements/button-link',
           text: 'Button Link'
         }, {
-          confidence: 'low',
+          confidence: 66,
           icon: 'apps',
           link: 'https://github.com/DigElements/extraction-grid',
           text: 'Extraction Grid'
         }, {
-          confidence: 'low',
+          confidence: 33,
           icon: 'text-format',
           link: 'https://github.com/DigElements/highlighted-text',
           text: 'Highlighted Text'
         }, {
-          confidence: 'low',
+          confidence: 0,
           icon: 'account-circle',
           link: 'https://github.com/DigElements/image-gallery',
           text: 'Image Gallery'

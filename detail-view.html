@@ -141,13 +141,21 @@ Custom property                        | Description                            
         <extraction-grid
           extractions="[[extractions]]"
           data-property="[[extractionDataProperty]]"
+          data-classifications-property="[[extractionDataClassificationsProperty]]"
           data-confidence-property="[[extractionDataConfidenceProperty]]"
           data-highlight-property="[[extractionDataHighlightProperty]]"
           data-icon-property="[[extractionDataIconProperty]]"
+          data-id-property="[[extractionDataIdProperty]]"
           data-link-property="[[extractionDataLinkProperty]]"
+          data-provenances-property="[[extractionDataProvenancesProperty]]"
           data-style-class-property="[[extractionDataStyleClassProperty]]"
           data-text-property="[[extractionDataTextProperty]]"
+          highlight-tag="[[extractionProvenanceHighlightTag]]"
           name-property="[[extractionNameProperty]]"
+          provenance-method-property="[[extractionProvenanceMethodProperty]]"
+          provenance-text-property="[[extractionProvenanceTextProperty]]"
+          result-id="[[resultId]]"
+          tag-manager="[[tagManager]]"
           target="[[_getTarget(newTab)]]">
         </extraction-grid>
       </template>
@@ -307,7 +315,20 @@ Custom property                        | Description                            
         /**
          * (Optional)
          *
-         * The confidence property in the data objects from the extraction objects.  Supported confidence values are "high" and "low".
+         * The classifications property in the data objects from the extraction objects.
+         *
+         * @type {String}
+         * @default 'classifications'
+         */
+        extractionDataClassificationsProperty: {
+          type: String,
+          value: 'classifications'
+        },
+
+        /**
+         * (Optional)
+         *
+         * The confidence property in the data objects from the extraction objects.
          *
          * @type {String}
          * @default 'confidence'
@@ -346,6 +367,19 @@ Custom property                        | Description                            
         /**
          * (Optional)
          *
+         * The ID property in the data objects from the extraction objects.
+         *
+         * @type {String}
+         * @default 'id'
+         */
+        extractionDataIdProperty: {
+          type: String,
+          value: 'id'
+        },
+
+        /**
+         * (Optional)
+         *
          * The link property in the data objects from the extraction objects.
          *
          * @type {String}
@@ -354,6 +388,19 @@ Custom property                        | Description                            
         extractionDataLinkProperty: {
           type: String,
           value: 'link'
+        },
+
+        /**
+         * (Optional)
+         *
+         * The provenance property in the data objects from the extraction objects.
+         *
+         * @type {String}
+         * @default 'provenances'
+         */
+        extractionDataProvenancesProperty: {
+          type: String,
+          value: 'provenances'
         },
 
         /**
@@ -393,6 +440,43 @@ Custom property                        | Description                            
         extractionNameProperty: {
           type: String,
           value: 'name'
+        },
+
+        /**
+         * (Optional)
+         *
+         * The provenance highlight tag.
+         *
+         * @type {String}
+         */
+        extractionProvenanceHighlightTag: {
+          type: String
+        },
+
+        /**
+         * (Optional)
+         *
+         * The method property in provenance objects from the data objects from the extraction objects.
+         *
+         * @type {String}
+         * @default 'method'
+         */
+        extractionProvenanceMethodProperty: {
+          type: String,
+          value: 'method'
+        },
+
+        /**
+         * (Optional)
+         *
+         * The text property in provenance objects from the data objects from the extraction objects.
+         *
+         * @type {String}
+         * @default 'text'
+         */
+        extractionProvenanceTextProperty: {
+          type: String,
+          value: 'text'
         },
 
         /**
@@ -486,6 +570,30 @@ Custom property                        | Description                            
         newTab: {
           type: Boolean,
           value: false
+        },
+
+        /**
+         * (Optional)
+         *
+         * The ID of the result corresponding to this detail-view.
+         *
+         * @type {String}
+         * @default ''
+         */
+        resultId: {
+          type: String,
+          value: ''
+        },
+
+        /**
+         * (Optional)
+         *
+         * The tag manager object.
+         *
+         * @type {Object}
+         */
+        tagManager: {
+          type: Object
         }
       },
 
