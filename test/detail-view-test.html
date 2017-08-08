@@ -58,6 +58,7 @@ limitations under the License.
         expect(element.extractionDataProvenancesProperty).to.equal('provenances');
         expect(element.extractionDataStyleClassProperty).to.equal('styleClass');
         expect(element.extractionDataTextProperty).to.equal('text');
+        expect(element.extractionDataTypeProperty).to.equal('type');
         expect(element.extractionNameProperty).to.equal('name');
         expect(element.extractionProvenanceHighlightTag).to.not.exist;
         expect(element.extractionProvenanceMethodProperty).to.equal('method');
@@ -69,7 +70,6 @@ limitations under the License.
         expect(element.largeImageStyleClass).to.equal('');
         expect(element.highlightedTextTags).to.equal('em');
         expect(element.newTab).to.be.false;
-        expect(element.resultId).to.equal('');
         expect(element.tagManager).to.not.exist;
       });
 
@@ -224,6 +224,7 @@ limitations under the License.
         }];
         element.extractionProvenanceHighlightTag = 'abcd';
         element.resultId = '1234';
+        element.resultType = 'document';
         element.tagManager = {
           addListener: function() {},
           removeListener: function() {},
@@ -255,11 +256,13 @@ limitations under the License.
         expect(element.$$('extraction-grid').dataProvenancesProperty).to.equal('provenances');
         expect(element.$$('extraction-grid').dataStyleClassProperty).to.equal('styleClass');
         expect(element.$$('extraction-grid').dataTextProperty).to.equal('text');
+        expect(element.$$('extraction-grid').dataTypeProperty).to.equal('type');
         expect(element.$$('extraction-grid').highlightTag).to.equal('abcd');
         expect(element.$$('extraction-grid').nameProperty).to.equal('name');
         expect(element.$$('extraction-grid').provenanceMethodProperty).to.equal('method');
         expect(element.$$('extraction-grid').provenanceTextProperty).to.equal('text');
         expect(element.$$('extraction-grid').resultId).to.equal('1234');
+        expect(element.$$('extraction-grid').resultType).to.equal('document');
         expect(element.$$('extraction-grid').tagManager).to.deep.equal(element.tagManager);
         expect(element.$$('extraction-grid').target).to.equal('_self');
       });

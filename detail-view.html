@@ -150,11 +150,13 @@ Custom property                        | Description                            
           data-provenances-property="[[extractionDataProvenancesProperty]]"
           data-style-class-property="[[extractionDataStyleClassProperty]]"
           data-text-property="[[extractionDataTextProperty]]"
+          data-type-property="[[extractionDataTypeProperty]]"
           highlight-tag="[[extractionProvenanceHighlightTag]]"
           name-property="[[extractionNameProperty]]"
           provenance-method-property="[[extractionProvenanceMethodProperty]]"
           provenance-text-property="[[extractionProvenanceTextProperty]]"
           result-id="[[resultId]]"
+          result-type="[[resultType]]"
           tag-manager="[[tagManager]]"
           target="[[_getTarget(newTab)]]">
         </extraction-grid>
@@ -432,6 +434,19 @@ Custom property                        | Description                            
         /**
          * (Optional)
          *
+         * The type property in the data objects from the extraction objects.
+         *
+         * @type {String}
+         * @default 'type'
+         */
+        extractionDataTypeProperty: {
+          type: String,
+          value: 'type'
+        },
+
+        /**
+         * (Optional)
+         *
          * The name property in the extraction objects.
          *
          * @type {String}
@@ -578,11 +593,20 @@ Custom property                        | Description                            
          * The ID of the result corresponding to this detail-view.
          *
          * @type {String}
-         * @default ''
          */
         resultId: {
-          type: String,
-          value: ''
+          type: String
+        },
+
+        /**
+         * (Optional)
+         *
+         * The type of the result corresponding to this detail-view.
+         *
+         * @type {String}
+         */
+        resultType: {
+          type: String
         },
 
         /**
