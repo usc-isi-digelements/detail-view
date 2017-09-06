@@ -18,91 +18,93 @@ limitations under the License.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
   <link rel="import" href="../detail-view.html">
 </head>
 
 <body unresolved>
-  <template is="dom-bind" id="demo">
-    <p>Button Link: https://nextcentury.com</p>
-    <p>Button Text: Open Website</p>
-    <p>Details: [[stringify(details)]]</p>
-    <p>Extractions: [[stringify(extractions)]]</p>
-    <p>Images: [[stringify(images)]]</p>
-    <p>Result ID: 1234</p>
-    <p>Result Type: document</p>
-    <p>New Tab: true</p>
+  <dom-bind id="demo">
+    <script>
+      (function(document) {
+        var demo = document.querySelector('dom-bind');
 
-    <detail-view
-      button-link="https://nextcentury.com"
-      button-text="Open Website"
-      details="[[details]]"
-      extractions="[[extractions]]"
-      images="[[images]]"
-      result-id="1234"
-      result-type="document"
-      new-tab>
-    </detail-view>
-  </template>
-
-  <script>
-    (function(document) {
-      var demo = document.querySelector('#demo');
-
-      demo.details = [{
-        name: 'Detail #1',
-        text: 'This is unhighlighted text.'
-      }, {
-        name: 'Detail #2',
-        highlightedText: 'This is <em>highlighted</em> text.'
-      }];
-
-      demo.extractions = [{
-        name: 'Extraction #1',
-        data: [{
-          confidence: 100,
-          highlight: true,
-          icon: 'link',
-          link: 'https://github.com/DigElements/detail-view',
-          text: 'Detail View'
-        }]
-      }, {
-        name: 'Extraction #2',
-        data: [{
-          confidence: 99,
-          icon: 'touch-app',
-          link: 'https://github.com/DigElements/button-link',
-          text: 'Button Link'
+        demo.details = [{
+          name: 'Detail #1',
+          text: 'This is unhighlighted text.'
         }, {
-          confidence: 66,
-          icon: 'apps',
-          link: 'https://github.com/DigElements/extraction-grid',
-          text: 'Extraction Grid'
-        }, {
-          confidence: 33,
-          icon: 'text-format',
-          link: 'https://github.com/DigElements/highlighted-text',
-          text: 'Highlighted Text'
-        }, {
-          confidence: 0,
-          icon: 'account-circle',
-          link: 'https://github.com/DigElements/image-gallery',
-          text: 'Image Gallery'
-        }]
-      }];
+          name: 'Detail #2',
+          highlightedText: 'This is <em>highlighted</em> text.'
+        }];
 
-      demo.images = [{
-        link: 'https://github.com/DigElements',
-        source: 'dig.png'
-      }, {
-        link: 'https://nextcentury.com',
-        source: 'NextCentury.png'
-      }];
+        demo.extractions = [{
+          name: 'Extraction #1',
+          data: [{
+            confidence: 100,
+            highlight: true,
+            icon: 'link',
+            link: 'https://github.com/DigElements/detail-view',
+            text: 'Detail View'
+          }]
+        }, {
+          name: 'Extraction #2',
+          data: [{
+            confidence: 99,
+            icon: 'touch-app',
+            link: 'https://github.com/DigElements/button-link',
+            text: 'Button Link'
+          }, {
+            confidence: 66,
+            icon: 'apps',
+            link: 'https://github.com/DigElements/extraction-grid',
+            text: 'Extraction Grid'
+          }, {
+            confidence: 33,
+            icon: 'text-format',
+            link: 'https://github.com/DigElements/highlighted-text',
+            text: 'Highlighted Text'
+          }, {
+            confidence: 0,
+            icon: 'account-circle',
+            link: 'https://github.com/DigElements/image-gallery',
+            text: 'Image Gallery'
+          }]
+        }];
 
-      demo.stringify = function(object) {
-        return JSON.stringify(object);
-      };
-    })(document);
-  </script>
+        demo.images = [{
+          link: 'https://github.com/DigElements',
+          source: 'dig.png'
+        }, {
+          link: 'https://nextcentury.com',
+          source: 'NextCentury.png'
+        }];
+
+        demo.stringify = function(object) {
+          return JSON.stringify(object);
+        };
+      })(document);
+    </script>
+
+    <template is="dom-bind">
+      <p>Button Link: https://nextcentury.com</p>
+      <p>Button Text: Open Website</p>
+      <p>Details: [[stringify(details)]]</p>
+      <p>Extractions: [[stringify(extractions)]]</p>
+      <p>Images: [[stringify(images)]]</p>
+      <p>Result ID: 1234</p>
+      <p>Result Type: document</p>
+      <p>New Tab: true</p>
+
+      <detail-view
+        button-link="https://nextcentury.com"
+        button-text="Open Website"
+        details="[[details]]"
+        extractions="[[extractions]]"
+        images="[[images]]"
+        result-id="1234"
+        result-type="document"
+        new-tab>
+      </detail-view>
+    </template>
+  </dom-bind>
 </body>
 </html>

@@ -98,7 +98,7 @@ Custom property                        | Description                            
       }
 
       .detail-name {
-        color: var(--detail-view-title-color, --secondary-text-color);
+        color: var(--detail-view-title-color, var(--secondary-text-color));
         display: inline-block;
       }
 
@@ -109,11 +109,11 @@ Custom property                        | Description                            
       extraction-grid {
         --extraction-grid-high-confidence-color: var(--detail-view-high-confidence-color);
         --extraction-grid-highlighted-text-color: var(--detail-view-highlighted-text-color);
-        --extraction-grid-hover-color: var(--detail-view-hover-color, --secondary-text-color);
-        --extraction-grid-label-color: var(--detail-view-label-color, --primary-text-color);
+        --extraction-grid-hover-color: var(--detail-view-hover-color, var(--secondary-text-color));
+        --extraction-grid-label-color: var(--detail-view-label-color, var(--primary-text-color));
         --extraction-grid-label-mixin: var(--detail-view-label-mixin);
         --extraction-grid-low-confidence-color: var(--detail-view-low-confidence-color);
-        --extraction-grid-title-color: var(--detail-view-title-color, --secondary-text-color);
+        --extraction-grid-title-color: var(--detail-view-title-color, var(--secondary-text-color));
       }
 
       button-link,
