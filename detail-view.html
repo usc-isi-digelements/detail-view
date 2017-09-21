@@ -100,6 +100,7 @@ Custom property                        | Description                            
 
       .detail-name {
         color: var(--detail-view-title-color, var(--secondary-text-color));
+        font-weight: 500;
         display: inline-block;
       }
 
@@ -131,7 +132,7 @@ Custom property                        | Description                            
       <template is="dom-repeat" items="[[details]]" as="detail">
         <div class="detail">
           <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
-            <strong class="detail-name">[[_getProperty(detail, detailNameProperty)]]</strong>
+            <span class="detail-name">[[_getProperty(detail, detailNameProperty)]]</span>
           </template>
           <template is="dom-if" if="[[_getProperty(detail, detailLinkProperty)]]">
             <a target="_blank" href$="[[_getProperty(detail, detailLinkProperty)]]">[[_getProperty(detail, detailTextProperty)]]</a>
@@ -156,12 +157,10 @@ Custom property                        | Description                            
           data-style-class-property="[[extractionDataStyleClassProperty]]"
           data-text-property="[[extractionDataTextProperty]]"
           data-type-property="[[extractionDataTypeProperty]]"
-          highlight-tag="[[extractionProvenanceHighlightTag]]"
           name-property="[[extractionNameProperty]]"
-          provenance-method-property="[[extractionProvenanceMethodProperty]]"
-          provenance-text-property="[[extractionProvenanceTextProperty]]"
           result-id="[[resultId]]"
           result-type="[[resultType]]"
+          show-provenances="{{showProvenances}}"
           tag-manager="[[tagManager]]"
           target="[[_getTarget(newTab)]]">
         </extraction-grid>
@@ -465,43 +464,6 @@ Custom property                        | Description                            
         /**
          * (Optional)
          *
-         * The provenance highlight tag.
-         *
-         * @type {String}
-         */
-        extractionProvenanceHighlightTag: {
-          type: String
-        },
-
-        /**
-         * (Optional)
-         *
-         * The method property in provenance objects from the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'method'
-         */
-        extractionProvenanceMethodProperty: {
-          type: String,
-          value: 'method'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The text property in provenance objects from the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'text'
-         */
-        extractionProvenanceTextProperty: {
-          type: String,
-          value: 'text'
-        },
-
-        /**
-         * (Optional)
-         *
          * The list of image objects.
          *
          * @type {Array}
@@ -612,6 +574,18 @@ Custom property                        | Description                            
          */
         resultType: {
           type: String
+        },
+
+        /**
+         * (Output)
+         *
+         * The provenance data and result ID to show in the provenance dialog.  An object containing {Array} data and {Number|String} id.
+         *
+         * @type {Object}
+         */
+        showProvenances: {
+          notify: true,
+          type: Object
         },
 
         /**
