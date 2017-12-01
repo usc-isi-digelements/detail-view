@@ -138,7 +138,12 @@ Custom property                        | Description                            
             <a target="_blank" href$="[[_getProperty(detail, detailLinkProperty)]]">[[_getProperty(detail, detailTextProperty)]]</a>
           </template>
           <template is="dom-if" if="[[!_getProperty(detail, detailLinkProperty)]]">
-            <highlighted-text tags="[[highlightedTextTags]]" text="[[_getDetailText(detail, detailHighlightedTextProperty, detailTextProperty)]]"></highlighted-text>
+            <template is="dom-if" if="[[!_getProperty(detail, detailHighlightedTextProperty)]]">
+              <span>[[_getProperty(detail, detailTextProperty)]]</span>
+            </template>
+            <template is="dom-if" if="[[_getProperty(detail, detailHighlightedTextProperty)]]">
+              <highlighted-text tags="[[highlightedTextTags]]" text="[[_getDetailText(detail, detailHighlightedTextProperty, detailTextProperty)]]"></highlighted-text>
+            </template>
           </template>
         </div>
       </template>
