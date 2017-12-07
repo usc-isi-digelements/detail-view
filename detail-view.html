@@ -182,6 +182,8 @@ Custom property                        | Description                            
         </button-link>
       </template>
 
+      <slot></slot>
+
       <template is="dom-if" if="[[images.length]]">
         <image-gallery
           images="[[images]]"
