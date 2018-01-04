@@ -164,6 +164,7 @@ Custom property                        | Description                            
           data-text-property="[[extractionDataTextProperty]]"
           data-type-property="[[extractionDataTypeProperty]]"
           data-width-property="[[extractionDataWidthProperty]]"
+          hide-confidences="[[hideConfidences]]"
           name-property="[[extractionNameProperty]]"
           result-id="[[resultId]]"
           result-type="[[resultType]]"
@@ -548,6 +549,19 @@ Custom property                        | Description                            
         largeImageStyleClass: {
           type: String,
           value: ''
+        },
+
+        /**
+         * (Optional)
+         *
+         * Whether to hide the confidences.
+         *
+         * @type {Boolean}
+         * @default false
+         */
+        hideConfidences: {
+          type: Boolean,
+          value: false
         },
 
         /**
