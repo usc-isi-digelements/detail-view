@@ -96,7 +96,9 @@ Custom property                        | Description                            
 
         /* Needed to fix flexbox layout issues in newer browsers. */
         white-space: normal;
+        /* Use break-all for Firefox and override with break-word for Chrome and Safari. */
         word-break: break-all;
+        word-break: break-word;
       }
 
       .detail-name {
@@ -143,7 +145,11 @@ Custom property                        | Description                            
               <span>[[_getProperty(detail, detailTextProperty)]]</span>
             </template>
             <template is="dom-if" if="[[_getProperty(detail, detailHighlightedTextProperty)]]">
-              <highlighted-text tags="[[highlightedTextTags]]" text="[[_getDetailText(detail, detailHighlightedTextProperty, detailTextProperty)]]"></highlighted-text>
+              <highlighted-text
+                newline-tag="[[newlineTag]]"
+                tags="[[highlightedTextTags]]"
+                text="[[_getDetailText(detail, detailHighlightedTextProperty, detailTextProperty)]]">
+              </highlighted-text>
             </template>
           </template>
         </div>
@@ -575,6 +581,17 @@ Custom property                        | Description                            
         highlightedTextTags: {
           type: String,
           value: 'em'
+        },
+
+        /**
+         * (Optional)
+         *
+         * The newline tag (like '\n' or '<br/>').
+         *
+         * @type {String}
+         */
+        newlineTag: {
+          type: String
         },
 
         /**
