@@ -20,7 +20,7 @@ limitations under the License.
 <link rel="import" href="../highlighted-text/highlighted-text.html">
 <link rel="import" href="../image-gallery/image-gallery.html">
 <link rel="import" href="../paper-material/paper-material.html">
-<link rel="import" href="../paper-styles/default-theme.html">
+<link rel="import" href="../paper-styles/color.html">
 
 <!--
 A Polymer Element showing details, extractions, images, and/or a button link.
@@ -68,11 +68,11 @@ Custom property                        | Description                            
 ---------------------------------------|---------------------------------------------|-----------------------
 `--detail-view-high-confidence-color`  | The color of the high confidence icon.      | none
 `--detail-view-highlighted-text-color` | The color of the highlighted text.          | none
-`--detail-view-hover-color`            | The color of the extraction label on hover. | --secondary-text-color
-`--detail-view-label-color`            | The color of the extraction label.          | --primary-text-color
+`--detail-view-hover-color`            | The color of the extraction label on hover. | --paper-indigo-900
+`--detail-view-label-color`            | The color of the extraction label.          | --paper-grey-900
 `--detail-view-label-mixin`            | Mixin applied to the extraction label.      | {}
 `--detail-view-low-confidence-color`   | The color of the low confidence icon.       | none
-`--detail-view-title-color`            | The color of the extraction title.          | --secondary-text-color
+`--detail-view-title-color`            | The color of the extraction title.          | --paper-grey-900
 
 @demo demo/index.html
 -->
@@ -81,6 +81,7 @@ Custom property                        | Description                            
   <template>
     <style>
       :host {
+        color: var(--paper-grey-900);
         display: block;
       }
 
@@ -102,7 +103,7 @@ Custom property                        | Description                            
       }
 
       .detail-name {
-        color: var(--detail-view-title-color, var(--secondary-text-color));
+        color: var(--detail-view-title-color, var(--paper-grey-900));
         font-weight: 500;
         display: inline-block;
       }
@@ -114,11 +115,11 @@ Custom property                        | Description                            
       extraction-grid {
         --extraction-grid-high-confidence-color: var(--detail-view-high-confidence-color);
         --extraction-grid-highlighted-text-color: var(--detail-view-highlighted-text-color);
-        --extraction-grid-hover-color: var(--detail-view-hover-color, var(--secondary-text-color));
-        --extraction-grid-label-color: var(--detail-view-label-color, var(--primary-text-color));
+        --extraction-grid-hover-color: var(--detail-view-hover-color, var(--paper-indigo-900));
+        --extraction-grid-label-color: var(--detail-view-label-color, var(--paper-grey-900));
         --extraction-grid-label-mixin: var(--detail-view-label-mixin);
         --extraction-grid-low-confidence-color: var(--detail-view-low-confidence-color);
-        --extraction-grid-title-color: var(--detail-view-title-color, var(--secondary-text-color));
+        --extraction-grid-title-color: var(--detail-view-title-color, var(--paper-grey-900));
       }
 
       button-link {
@@ -634,11 +635,11 @@ Custom property                        | Description                            
          *
          * The provenance data and result ID to show in the provenance dialog.  Contains {Number|String} confidence, {Array} data, and {Number|String} id.
          *
-         * @type {Object}
+         * @type {Array}
          */
         showProvenances: {
           notify: true,
-          type: Object
+          type: Array
         },
 
         /**
