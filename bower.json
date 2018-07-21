@@ -9,17 +9,17 @@
     "polymer"
   ],
   "main": "detail-view.html",
-  "homepage": "https://github.com/DigElements/detail-view/",
+  "homepage": "https://github.com/usc-isi-digelements/detail-view/",
   "ignore": [
     "/.*",
     "/test/"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.2",
-    "button-link": "DigElements/button-link#2.0.2",
-    "extraction-grid": "DigElements/extraction-grid#2.3.3",
-    "highlighted-text": "DigElements/highlighted-text#2.2.1",
-    "image-gallery": "DigElements/image-gallery#2.2.0",
+    "button-link": "usc-isi-digelements/button-link#2.0.2",
+    "extraction-grid": "usc-isi-digelements/extraction-grid#2.3.3",
+    "highlighted-text": "usc-isi-digelements/highlighted-text#2.2.1",
+    "image-gallery": "usc-isi-digelements/image-gallery#2.2.0",
     "paper-material": "PolymerElements/paper-material#^2.0.0",
     "paper-styles": "PolymerElements/paper-styles#^2.0.0"
   },
