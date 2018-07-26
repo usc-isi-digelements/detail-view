@@ -12,11 +12,13 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.2",
     "button-link": "usc-isi-digelements/button-link#^2.0.2",
-    "extraction-grid": "usc-isi-digelements/extraction-grid#^2.3.4",
+    "extraction-grid": "usc-isi-digelements/extraction-grid#^2.3.6",
     "highlighted-text": "usc-isi-digelements/highlighted-text#^2.2.1",
     "image-gallery": "usc-isi-digelements/image-gallery#^2.2.0",
     "paper-material": "PolymerElements/paper-material#^2.0.0",
-    "paper-styles": "PolymerElements/paper-styles#^2.0.0"
+    "paper-styles": "PolymerElements/paper-styles#^2.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
+    "icon-label": "usc-isi-digelements/icon-label#^2.2.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",

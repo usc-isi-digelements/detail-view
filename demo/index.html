@@ -25,64 +25,89 @@ limitations under the License.
 <body unresolved>
   <dom-bind id="demo">
     <script>
-      (function(document) {
-        var demo = document.querySelector('dom-bind');
+    (function(document) {
+  var demo = document.querySelector('dom-bind');
 
-        demo.details = [{
-          name: 'Detail #1',
-          text: 'This is unhighlighted text.'
-        }, {
-          name: 'Detail #2',
-          highlightedText: 'This is <em>highlighted</em> text.'
-        }];
+  demo.details = [
+    {
+      name: 'Detail #1 long',
+      text:
+        'This is unhighlighted text. This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.This is This is unhighlighted text.This is unhighlighted text. text.This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.This is unhighlighted text.'
+    },
+    {
+      name: 'Detail #2 short',
+      highlightedText: 'This is <em>highlighted</em> text.'
+    },
+    {
+      name: 'Detail #3 mid',
+      text: 'This is unhighlighted text.This is unhighlighted text.'
+    },
+    {
+      name: 'Detail #3 mid',
+      text: 'This is unhighlighted text.This is unhighlighted text.'
+    }
+  ];
 
-        demo.extractions = [{
-          name: 'Extraction #1',
-          data: [{
-            confidence: 100,
-            highlight: true,
-            icon: 'link',
-            link: 'https://github.com/usc-isi-digelements/detail-view',
-            text: 'Detail View'
-          }]
-        }, {
-          name: 'Extraction #2',
-          data: [{
-            confidence: 99,
-            icon: 'touch-app',
-            link: 'https://github.com/usc-isi-digelements/button-link',
-            text: 'Button Link'
-          }, {
-            confidence: 66,
-            icon: 'apps',
-            link: 'https://github.com/usc-isi-digelements/extraction-grid',
-            text: 'Extraction Grid'
-          }, {
-            confidence: 33,
-            icon: 'text-format',
-            link: 'https://github.com/usc-isi-digelements/highlighted-text',
-            text: 'Highlighted Text'
-          }, {
-            confidence: 0,
-            icon: 'account-circle',
-            link: 'https://github.com/usc-isi-digelements/image-gallery',
-            text: 'Image Gallery'
-          }]
-        }];
+  demo.extractions = [
+    {
+      name: 'Extraction #1',
+      data: [
+        {
+          confidence: 100,
+          highlight: true,
+          icon: 'link',
+          link: 'https://github.com/usc-isi-digelements/detail-view',
+          text: 'Detail View'
+        }
+      ]
+    },
+    {
+      name: 'Extraction #2',
+      data: [
+        {
+          confidence: 99,
+          icon: 'touch-app',
+          link: 'https://github.com/usc-isi-digelements/button-link',
+          text: 'Button Link'
+        },
+        {
+          confidence: 66,
+          icon: 'apps',
+          link: 'https://github.com/usc-isi-digelements/extraction-grid',
+          text: 'Extraction Grid'
+        },
+        {
+          confidence: 33,
+          icon: 'text-format',
+          link: 'https://github.com/usc-isi-digelements/highlighted-text',
+          text: 'Highlighted Text'
+        },
+        {
+          confidence: 0,
+          icon: 'account-circle',
+          link: 'https://github.com/usc-isi-digelements/image-gallery',
+          text: 'Image Gallery'
+        }
+      ]
+    }
+  ];
 
-        demo.images = [{
-          link: 'https://github.com/DigElements',
-          source: 'dig.png'
-        }, {
-          link: 'https://nextcentury.com',
-          source: 'NextCentury.png'
-        }];
+  demo.images = [
+    {
+      link: 'https://github.com/DigElements',
+      source: 'dig.png'
+    },
+    {
+      link: 'https://nextcentury.com',
+      source: 'NextCentury.png'
+    }
+  ];
 
-        demo.stringify = function(object) {
-          return JSON.stringify(object);
-        };
-      })(document);
-    </script>
+  demo.stringify = function(object) {
+    return JSON.stringify(object);
+  };
+})(document);
+</script>
 
     <template is="dom-bind">
       <p>Button Link: https://nextcentury.com</p>

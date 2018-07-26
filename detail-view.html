@@ -21,6 +21,9 @@ limitations under the License.
 <link rel="import" href="../image-gallery/image-gallery.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../icon-label/icon-label.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+
 
 <!--
 A Polymer Element showing details, extractions, images, and/or a button link.
@@ -79,10 +82,29 @@ Custom property                        | Description                            
 
 <dom-module id="detail-view">
   <template>
+    <style include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+
     <style>
       :host {
+        @apply --layout-horizontal;
+        @apply --layout-wrap;
         color: var(--paper-grey-900);
-        display: block;
+        font-size: 14px;
+        line-height: 20px;
+        min-height: 20px;
+
+        /* Needed to fix flexbox layout issues in newer browsers. */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        /* Use break-all for Firefox and override with break-word for Chrome and Safari. */
+        word-break: break-all;
+        word-break: break-word;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+
+        /* color: var(--paper-grey-900);
+        display: block; */
       }
 
       paper-material {
@@ -94,6 +116,8 @@ Custom property                        | Description                            
         font-size: 14px;
         line-height: 20px;
         margin-bottom: 5px;
+        padding: 5px;
+        width: auto;
 
         /* Needed to fix flexbox layout issues in newer browsers. */
         white-space: normal;
@@ -108,8 +132,20 @@ Custom property                        | Description                            
         display: inline-block;
       }
 
+      .detail-name icon-label {
+        --icon-label-text: {
+          color: var(--extraction-grid-title-color, var(--paper-grey-900));
+          @apply --extraction-grid-label-mixin;
+        };
+      }
+
       .detail highlighted-text {
         margin-top: 5px;
+      }
+
+      .detail-item {
+        border-radius: 2px;
+        margin: 5px 5px 0 0;
       }
 
       extraction-grid {
@@ -130,33 +166,34 @@ Custom property                        | Description                            
       image-gallery {
         margin-top: 10px;
       }
+
+      @media all and (min-width: 1001px) and (max-width: 1250px) {
+        .detail {
+          width: auto;
+        }
+      }
+
+      @media all and (min-width: 1251px) and (max-width: 1500px) {
+        .detail {
+          width: auto;
+        }
+      }
+
+      @media all and (min-width: 1501px) and (max-width: 1750px) {
+        .detail {
+          width: auto;
+        }
+      }
+
+      @media all and (min-width: 1751px) {
+        .detail {
+          width: auto;
+        }
+      }
     </style>
 
     <paper-material elevation="2">
-      <template is="dom-repeat" items="[[details]]" as="detail">
-        <div class="detail">
-          <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
-            <span class="detail-name">[[_getProperty(detail, detailNameProperty)]]</span>
-          </template>
-          <template is="dom-if" if="[[_getProperty(detail, detailLinkProperty)]]">
-            <a target="_blank" href$="[[_getProperty(detail, detailLinkProperty)]]">[[_getProperty(detail, detailTextProperty)]]</a>
-          </template>
-          <template is="dom-if" if="[[!_getProperty(detail, detailLinkProperty)]]">
-            <template is="dom-if" if="[[!_getProperty(detail, detailHighlightedTextProperty)]]">
-              <span>[[_getProperty(detail, detailTextProperty)]]</span>
-            </template>
-            <template is="dom-if" if="[[_getProperty(detail, detailHighlightedTextProperty)]]">
-              <highlighted-text
-                newline-tag="[[newlineTag]]"
-                tags="[[highlightedTextTags]]"
-                text="[[_getDetailText(detail, detailHighlightedTextProperty, detailTextProperty)]]">
-              </highlighted-text>
-            </template>
-          </template>
-        </div>
-      </template>
-
-      <template is="dom-if" if="[[extractions.length]]">
+      <template is="dom-if" if="[[_getLength(extractions)]]">
         <extraction-grid
           extractions="[[extractions]]"
           data-property="[[extractionDataProperty]]"
@@ -179,6 +216,43 @@ Custom property                        | Description                            
           tag-manager="[[tagManager]]"
           target="[[_getTarget(newTab)]]">
         </extraction-grid>
+        <hr>
+      </template>
+
+      <template is="dom-if" if="[[_getLength(details)]]">
+        <div class="layout horizontal wrap">
+          <template is="dom-repeat" items="[[_sortDetails(details)]]" as="detail">
+            <div class="layout vertical detail">
+              <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
+                <div class="layout horizontal center detail-name">
+                  <icon-label
+                    icon="icons:book"
+                    icon-style-class="grey"
+                    text="[[_getProperty(detail, detailNameProperty)]]">
+                  </icon-label>
+                </div>
+              </template>
+              <div class="layout horizontal center detail-item">
+                <template is="dom-if" if="[[_getProperty(detail, detailLinkProperty)]]">
+                  <a target="_blank" href$="[[_getProperty(detail, detailLinkProperty)]]">[[_getProperty(detail, detailTextProperty)]]</a>
+                </template>
+                <template is="dom-if" if="[[!_getProperty(detail, detailLinkProperty)]]">
+                  <template is="dom-if" if="[[!_getProperty(detail, detailHighlightedTextProperty)]]">
+                      <div>[[_getProperty(detail, detailTextProperty)]]</div>
+                  </template>
+                  <template is="dom-if" if="[[_getProperty(detail, detailHighlightedTextProperty)]]">
+                    <highlighted-text
+                      newline-tag="[[newlineTag]]"
+                      tags="[[highlightedTextTags]]"
+                      text="[[_getDetailText(detail, detailHighlightedTextProperty, detailTextProperty)]]">
+                    </highlighted-text>
+                  </template>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+        <hr>
       </template>
 
       <template is="dom-if" if="[[buttonLink]]">
@@ -193,7 +267,7 @@ Custom property                        | Description                            
 
       <slot></slot>
 
-      <template is="dom-if" if="[[images.length]]">
+      <template is="dom-if" if="[[_getLength(images)]]">
         <image-gallery
           images="[[images]]"
           image-link-property="[[imageLinkProperty]]"
@@ -207,500 +281,568 @@ Custom property                        | Description                            
   </template>
 
   <script>
-  (function() {
-    'use strict';
+  class DetailView extends Polymer.Element {
+  // returns the name of the component
+  static get is() {
+    return 'detail-view';
+  }
 
-    Polymer({
-      is: 'detail-view',
+  // defines the component's properties
+  static get properties() {
+    return {
+      /**
+       * (Optional)
+       *
+       * The link of the button.  If blank, button is not shown.
+       *
+       * @type {String}
+       * @default ''
+       */
+      buttonLink: {
+        type: String,
+        value: ''
+      },
 
-      properties: {
-        /**
-         * (Optional)
-         *
-         * The link of the button.  If blank, button is not shown.
-         *
-         * @type {String}
-         * @default ''
-         */
-        buttonLink: {
-          type: String,
-          value: ''
-        },
+      /**
+       * (Optional)
+       *
+       * The text of the button.
+       *
+       * @type {String}
+       * @default ''
+       */
+      buttonText: {
+        type: String,
+        value: ''
+      },
 
-        /**
-         * (Optional)
-         *
-         * The text of the button.
-         *
-         * @type {String}
-         * @default ''
-         */
-        buttonText: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * (Optional)
-         *
-         * The list of detail objects.
-         *
-         * @type {Array}
-         * @default []
-         */
-        details: {
-          type: Array,
-          value: function() {
-            return [];
-          }
-        },
-
-        /**
-         * (Optional)
-         *
-         * The highlighted text property in the detail objects.
-         *
-         * @type {String}
-         * @default 'highlightedText'
-         */
-        detailHighlightedTextProperty: {
-          type: String,
-          value: 'highlightedText'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The link property in the detail objects.
-         *
-         * @type {String}
-         * @default 'link'
-         */
-        detailLinkProperty: {
-          type: String,
-          value: 'link'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The name property in the detail objects.
-         *
-         * @type {String}
-         * @default 'name'
-         */
-        detailNameProperty: {
-          type: String,
-          value: 'name'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The text property in the detail objects.
-         *
-         * @type {String}
-         * @default 'text'
-         */
-        detailTextProperty: {
-          type: String,
-          value: 'text'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The list of extraction objects.
-         *
-         * @type {Array}
-         * @default []
-         */
-        extractions: {
-          type: Array,
-          value: function() {
-            return [];
-          }
-        },
-
-        /**
-         * (Optional)
-         *
-         * The data property in the extraction objects with a list of data objects.
-         *
-         * @type {String}
-         * @default 'data'
-         */
-        extractionDataProperty: {
-          type: String,
-          value: 'data'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The classifications property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'classifications'
-         */
-        extractionDataClassificationsProperty: {
-          type: String,
-          value: 'classifications'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The confidence property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'confidence'
-         */
-        extractionDataConfidenceProperty: {
-          type: String,
-          value: 'confidence'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The highlight property in the data objects from the extraction objects on whether to highlight the background of the extraction.
-         *
-         * @type {String}
-         * @default 'highlight'
-         */
-        extractionDataHighlightProperty: {
-          type: String,
-          value: 'highlight'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The icon property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'icon'
-         */
-        extractionDataIconProperty: {
-          type: String,
-          value: 'icon'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The ID property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'id'
-         */
-        extractionDataIdProperty: {
-          type: String,
-          value: 'id'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The link property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'link'
-         */
-        extractionDataLinkProperty: {
-          type: String,
-          value: 'link'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The provenance property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'provenances'
-         */
-        extractionDataProvenancesProperty: {
-          type: String,
-          value: 'provenances'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The style class property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'styleCass'
-         */
-        extractionDataStyleClassProperty: {
-          type: String,
-          value: 'styleClass'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The text property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'text'
-         */
-        extractionDataTextProperty: {
-          type: String,
-          value: 'text'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The type property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'type'
-         */
-        extractionDataTypeProperty: {
-          type: String,
-          value: 'type'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The width property in the data objects from the extraction objects.
-         *
-         * @type {String}
-         * @default 'width'
-         */
-        extractionDataWidthProperty: {
-          type: String,
-          value: 'width'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The name property in the extraction objects.
-         *
-         * @type {String}
-         * @default 'name'
-         */
-        extractionNameProperty: {
-          type: String,
-          value: 'name'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The list of image objects.
-         *
-         * @type {Array}
-         * @default []
-         */
-        images: {
-          type: Array,
-          value: function() {
-            return [];
-          }
-        },
-
-        /**
-         * (Optional)
-         *
-         * The link property in the image objects.
-         *
-         * @type {String}
-         * @default 'link'
-         */
-        imageLinkProperty: {
-          type: String,
-          value: 'link'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The source property in the image objects.
-         *
-         * @type {String}
-         * @default 'source'
-         */
-        imageSourceProperty: {
-          type: String,
-          value: 'source'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The style class for all the images in the gallery.
-         *
-         * @type {String}
-         * @default ''
-         */
-        smallImageStyleClass: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * (Optional)
-         *
-         * The style class for any image in a popup.
-         *
-         * @type {String}
-         * @default ''
-         */
-        largeImageStyleClass: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * (Optional)
-         *
-         * Whether to hide the confidences.
-         *
-         * @type {Boolean}
-         * @default false
-         */
-        hideConfidences: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * (Optional)
-         *
-         * The highlighted text tags.  Example:  "This is <em>highlighted</em> text."
-         *
-         * @type {String}
-         * @default 'em'
-         */
-        highlightedTextTags: {
-          type: String,
-          value: 'em'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The newline tag (like '\n' or '<br/>').
-         *
-         * @type {String}
-         */
-        newlineTag: {
-          type: String
-        },
-
-        /**
-         * (Optional)
-         *
-         * Whether to open a link in a new tab.
-         *
-         * @type {Boolean}
-         * @default false
-         */
-        newTab: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * (Optional)
-         *
-         * The ID of the result corresponding to this detail-view.
-         *
-         * @type {String}
-         */
-        resultId: {
-          type: String
-        },
-
-        /**
-         * (Optional)
-         *
-         * The type of the result corresponding to this detail-view.
-         *
-         * @type {String}
-         */
-        resultType: {
-          type: String
-        },
-
-        /**
-         * (Output)
-         *
-         * The provenance data and result ID to show in the provenance dialog.  Contains {Number|String} confidence, {Array} data, and {Number|String} id.
-         *
-         * @type {Array}
-         */
-        showProvenances: {
-          notify: true,
-          type: Array
-        },
-
-        /**
-         * (Optional)
-         *
-         * The tag manager object.
-         *
-         * @type {Object}
-         */
-        tagManager: {
-          type: Object
+      /**
+       * (Optional)
+       *
+       * The list of detail objects.
+       *
+       * @type {Array}
+       * @default []
+       */
+      details: {
+        type: Array,
+        value: function() {
+          return [];
         }
       },
 
       /**
-       * Returns the highlighted text or text of the given detail or "None" by default.
+       * (Optional)
        *
-       * @param {Object} detail
-       * @param {String} highlightedTextProperty
-       * @param {String} textProperty
-       * @return {String}
-       * @private
+       * The highlighted text property in the detail objects.
+       *
+       * @type {String}
+       * @default 'highlightedText'
        */
-      _getDetailText: function(detail, highlightedTextProperty, textProperty) {
-        return (detail ? (detail[highlightedTextProperty] || detail[textProperty]) : '') || 'None';
+      detailHighlightedTextProperty: {
+        type: String,
+        value: 'highlightedText'
       },
 
       /**
-       * Returns the button link icon.
+       * (Optional)
        *
-       * @param {Boolean} newTab
-       * @return {String}
-       * @private
+       * The link property in the detail objects.
+       *
+       * @type {String}
+       * @default 'link'
        */
-      _getLinkIcon: function(newTab) {
-        return (newTab ? 'open-in-new' : 'open-in-browser');
+      detailLinkProperty: {
+        type: String,
+        value: 'link'
       },
 
       /**
-       * Returns the object in the given item at the given property.
+       * (Optional)
        *
-       * @param {Object} item
-       * @param {String} property
-       * @return {Object}
-       * @private
+       * The name property in the detail objects.
+       *
+       * @type {String}
+       * @default 'name'
        */
-      _getProperty: function(item, property) {
-        return item ? item[property] : undefined;
+      detailNameProperty: {
+        type: String,
+        value: 'name'
       },
 
       /**
-       * Returns the anchor and button target string.
+       * (Optional)
        *
-       * @param {Boolean} newTab
-       * @return {String}
-       * @private
+       * The text property in the detail objects.
+       *
+       * @type {String}
+       * @default 'text'
        */
-      _getTarget: function(newTab) {
-        return (newTab ? '_blank' : '_self');
+      detailTextProperty: {
+        type: String,
+        value: 'text'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The list of extraction objects.
+       *
+       * @type {Array}
+       * @default []
+       */
+      extractions: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      },
+
+      /**
+       * (Optional)
+       *
+       * The data property in the extraction objects with a list of data objects.
+       *
+       * @type {String}
+       * @default 'data'
+       */
+      extractionDataProperty: {
+        type: String,
+        value: 'data'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The classifications property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'classifications'
+       */
+      extractionDataClassificationsProperty: {
+        type: String,
+        value: 'classifications'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The confidence property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'confidence'
+       */
+      extractionDataConfidenceProperty: {
+        type: String,
+        value: 'confidence'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The highlight property in the data objects from the extraction objects on whether to highlight the background of the extraction.
+       *
+       * @type {String}
+       * @default 'highlight'
+       */
+      extractionDataHighlightProperty: {
+        type: String,
+        value: 'highlight'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The icon property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'icon'
+       */
+      extractionDataIconProperty: {
+        type: String,
+        value: 'icon'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The ID property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'id'
+       */
+      extractionDataIdProperty: {
+        type: String,
+        value: 'id'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The link property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'link'
+       */
+      extractionDataLinkProperty: {
+        type: String,
+        value: 'link'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The provenance property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'provenances'
+       */
+      extractionDataProvenancesProperty: {
+        type: String,
+        value: 'provenances'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The style class property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'styleCass'
+       */
+      extractionDataStyleClassProperty: {
+        type: String,
+        value: 'styleClass'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The text property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'text'
+       */
+      extractionDataTextProperty: {
+        type: String,
+        value: 'text'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The type property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'type'
+       */
+      extractionDataTypeProperty: {
+        type: String,
+        value: 'type'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The width property in the data objects from the extraction objects.
+       *
+       * @type {String}
+       * @default 'width'
+       */
+      extractionDataWidthProperty: {
+        type: String,
+        value: 'width'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The name property in the extraction objects.
+       *
+       * @type {String}
+       * @default 'name'
+       */
+      extractionNameProperty: {
+        type: String,
+        value: 'name'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The list of image objects.
+       *
+       * @type {Array}
+       * @default []
+       */
+      images: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      },
+
+      /**
+       * (Optional)
+       *
+       * The link property in the image objects.
+       *
+       * @type {String}
+       * @default 'link'
+       */
+      imageLinkProperty: {
+        type: String,
+        value: 'link'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The source property in the image objects.
+       *
+       * @type {String}
+       * @default 'source'
+       */
+      imageSourceProperty: {
+        type: String,
+        value: 'source'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The style class for all the images in the gallery.
+       *
+       * @type {String}
+       * @default ''
+       */
+      smallImageStyleClass: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * (Optional)
+       *
+       * The style class for any image in a popup.
+       *
+       * @type {String}
+       * @default ''
+       */
+      largeImageStyleClass: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * (Optional)
+       *
+       * Whether to hide the confidences.
+       *
+       * @type {Boolean}
+       * @default false
+       */
+      hideConfidences: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * (Optional)
+       *
+       * The highlighted text tags.  Example:  "This is <em>highlighted</em> text."
+       *
+       * @type {String}
+       * @default 'em'
+       */
+      highlightedTextTags: {
+        type: String,
+        value: 'em'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The newline tag (like '\n' or '<br/>').
+       *
+       * @type {String}
+       */
+      newlineTag: {
+        type: String
+      },
+
+      /**
+       * (Optional)
+       *
+       * Whether to open a link in a new tab.
+       *
+       * @type {Boolean}
+       * @default false
+       */
+      newTab: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * (Optional)
+       *
+       * The ID of the result corresponding to this detail-view.
+       *
+       * @type {String}
+       */
+      resultId: {
+        type: String
+      },
+
+      /**
+       * (Optional)
+       *
+       * The type of the result corresponding to this detail-view.
+       *
+       * @type {String}
+       */
+      resultType: {
+        type: String
+      },
+
+      /**
+       * (Output)
+       *
+       * The provenance data and result ID to show in the provenance dialog.  Contains {Number|String} confidence, {Array} data, and {Number|String} id.
+       *
+       * @type {Array}
+       */
+      showProvenances: {
+        notify: true,
+        type: Array
+      },
+
+      /**
+       * (Optional)
+       *
+       * The tag manager object.
+       *
+       * @type {Object}
+       */
+      tagManager: {
+        type: Object
       }
+    };
+  }
+
+  /**
+   * Returns the highlighted text or text of the given detail or "None" by default.
+   *
+   * @param {Object} detail
+   * @param {String} highlightedTextProperty
+   * @param {String} textProperty
+   * @return {String}
+   * @private
+   */
+  _getDetailText(detail, highlightedTextProperty, textProperty) {
+    return (
+      (detail ? detail[highlightedTextProperty] || detail[textProperty] : '') ||
+      'None'
+    );
+  }
+
+  /**
+   * Returns the button link icon.
+   *
+   * @param {Boolean} newTab
+   * @return {String}
+   * @private
+   */
+  _getLinkIcon(newTab) {
+    return newTab ? 'open-in-new' : 'open-in-browser';
+  }
+
+  /**
+   * Returns the object in the given item at the given property.
+   *
+   * @param {Object} item
+   * @param {String} property
+   * @return {Object}
+   * @private
+   */
+  _getProperty(item, property) {
+    return item ? item[property] : undefined;
+  }
+
+  /**
+   * Returns the Details list which sorted by their text length.
+   *
+   * @param {Array} list
+   * @return {Array} sorted list
+   * @private
+   */
+  _sortDetails(list) {
+    var temp_map = list.map(function(detail) {
+      console.log('detail', detail);
+      var name_length = 0;
+      var text_length = 0;
+
+      if (detail['name'].length > 0) {
+        name_length += detail['name'].length;
+        console.log('name_length', name_length);
+      }
+
+      if (detail['text']) {
+        text_length += detail['text'].length;
+      } else {
+        text_length += detail['highlightedText'].length - 9;
+      }
+      console.log('text_length', text_length);
+
+      return {
+        length: name_length > text_length ? name_length : text_length,
+        item_data: detail
+      };
     });
-  })();
-  </script>
+    console.log('temp_map', temp_map);
+
+    function compare(property) {
+      return function(obj1, obj2) {
+        var value1 = obj1[property];
+        var value2 = obj2[property];
+        return value1 - value2;
+      };
+    }
+
+    var sorted_map = temp_map.sort(compare('length'));
+    var sorted_details = [];
+
+    sorted_map.map(object => {
+      sorted_details.push(object['item_data']);
+    });
+    return sorted_details;
+  }
+
+  /**
+   * Returns the length of list
+   *
+   * @param {Array} list
+   * @return {Number} length
+   * @private
+   */
+  _getLength(list) {
+    console.log('list', list);
+    console.log('list length', list.length);
+    return list ? list.length : undefined;
+  }
+
+  /**
+   * Returns the anchor and button target string.
+   *
+   * @param {Boolean} newTab
+   * @return {String}
+   * @private
+   */
+  _getTarget(newTab) {
+    return newTab ? '_blank' : '_self';
+  }
+}
+customElements.define(DetailView.is, DetailView);
+</script>
 </dom-module>
