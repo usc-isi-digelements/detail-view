@@ -139,6 +139,9 @@ Custom property                        | Description                            
           @apply --extraction-grid-label-mixin;
         };
       }
+      .unhighlighted {
+        margin-top: 5px;
+      }
 
       .detail highlighted-text {
         margin-top: 5px;
@@ -238,7 +241,7 @@ Custom property                        | Description                            
                 </template>
                 <template is="dom-if" if="[[!_getProperty(detail, detailLinkProperty)]]">
                   <template is="dom-if" if="[[!_getProperty(detail, detailHighlightedTextProperty)]]">
-                      <div>[[_getProperty(detail, detailTextProperty)]]</div>
+                      <div class="unhighlighted">[[_getProperty(detail, detailTextProperty)]]</div>
                   </template>
                   <template is="dom-if" if="[[_getProperty(detail, detailHighlightedTextProperty)]]">
                     <highlighted-text
