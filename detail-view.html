@@ -152,6 +152,18 @@ Custom property                        | Description                            
         margin: 5px 5px 0 0;
       }
 
+      .detail-item icon-label {
+        margin-top: 5px;
+        --icon-label-text: {
+          color: var(--extraction-grid-label-color, var(--paper-grey-900));
+          @apply --extraction-grid-label-mixin;
+        };
+
+        --icon-label-link-hover: {
+          color: var(--extraction-grid-hover-color, var(--paper-indigo-900));
+        };
+      }
+
       extraction-grid {
         --extraction-grid-high-confidence-color: var(--detail-view-high-confidence-color);
         --extraction-grid-highlighted-text-color: var(--detail-view-highlighted-text-color);
@@ -227,9 +239,41 @@ Custom property                        | Description                            
       </template>
 
       <template is="dom-if" if="[[_getLength(details)]]">
-        <div class="layout horizontal wrap">
+          <div class="layout horizontal wrap">
           <template is="dom-repeat" items="[[_sortDetails(details)]]" as="detail">
             <div class="layout vertical detail">
+              <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
+                <div class="layout horizontal center detail-name">
+                  <icon-label
+                    tappable
+                    icon="icons:book"
+                    icon-style-class="grey"
+                    text="[[_getProperty(detail, detailNameProperty)]]">
+                  </icon-label>
+                </div>
+              </template>
+              <div class="layout horizontal center detail-item">
+                <template is="dom-if" if="[[_getProperty(detail, detailTextProperty)]]">
+                  <icon-label
+                    link="[[_getProperty(detail, detailLinkProperty)]]"
+                    on-tap="_handleTapEvent"
+                    tappable
+                    target="[[_getTarget(newTab)]]"
+                    text="[[_getProperty(detail, detailTextProperty)]]"
+                    >
+                  </icon-label>
+                </template>
+
+                <template is="dom-if" if="[[_getProperty(detail, detailHighlightedTextProperty)]]">
+                  <highlighted-text
+                    newline-tag="[[newlineTag]]"
+                    tags="[[highlightedTextTags]]"
+                    text="[[_getDetailText(detail, detailHighlightedTextProperty, detailTextProperty)]]">
+                  </highlighted-text>
+                </template>
+              </div>
+            </div>
+            <!-- <div class="layout vertical detail">
               <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
                 <div class="layout horizontal center detail-name">
                   <icon-label
@@ -257,7 +301,7 @@ Custom property                        | Description                            
                   </template>
                 </template>
               </div>
-            </div>
+            </div> -->
           </template>
         </div>
       </template>
@@ -820,7 +864,8 @@ Custom property                        | Description                            
     sorted_map.map(object => {
       if (
         object['item_data']['name'] !== 'Raw ES Data' &&
-        object['item_data']['name'] !== 'Cached Page'
+        object['item_data']['name'] !== 'Cached Page' &&
+        object['item_data']['name'] !== 'Url'
       ) {
         sorted_details.push(object['item_data']);
       }
@@ -837,6 +882,21 @@ Custom property                        | Description                            
    */
   _getLength(list) {
     return list ? list.length : undefined;
+  }
+
+  /**
+   * Stops propagation of the given event if the user accessed a link.
+   *
+   * @event tap
+   * @private
+   */
+  _handleTapEvent(event) {
+    if (
+      event.model.extraction &&
+      event.model.extraction[this.dataLinkProperty]
+    ) {
+      event.stopPropagation();
+    }
   }
 
   /**
