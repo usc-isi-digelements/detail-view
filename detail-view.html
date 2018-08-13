@@ -171,6 +171,10 @@ Custom property                        | Description                            
         margin-top: 10px;
       }
 
+      a {
+        padding-top: 5px;
+      }
+
       @media all and (min-width: 1001px) and (max-width: 1250px) {
         .detail {
           width: auto;
@@ -229,6 +233,7 @@ Custom property                        | Description                            
               <template is="dom-if" if="[[_getProperty(detail, detailNameProperty)]]">
                 <div class="layout horizontal center detail-name">
                   <icon-label
+                    tappable
                     icon="icons:book"
                     icon-style-class="grey"
                     text="[[_getProperty(detail, detailNameProperty)]]">
@@ -787,7 +792,6 @@ Custom property                        | Description                            
 
       if (detail['name'].length > 0) {
         name_length += detail['name'].length;
-        console.log('name_length', name_length);
       }
 
       if (detail['text']) {
@@ -795,14 +799,12 @@ Custom property                        | Description                            
       } else {
         text_length += detail['highlightedText'].length - 9;
       }
-      console.log('text_length', text_length);
 
       return {
         length: name_length > text_length ? name_length : text_length,
         item_data: detail
       };
     });
-    console.log('temp_map', temp_map);
 
     function compare(property) {
       return function(obj1, obj2) {
@@ -816,7 +818,12 @@ Custom property                        | Description                            
     var sorted_details = [];
 
     sorted_map.map(object => {
-      sorted_details.push(object['item_data']);
+      if (
+        object['item_data']['name'] !== 'Raw ES Data' &&
+        object['item_data']['name'] !== 'Cached Page'
+      ) {
+        sorted_details.push(object['item_data']);
+      }
     });
     return sorted_details;
   }
@@ -829,8 +836,6 @@ Custom property                        | Description                            
    * @private
    */
   _getLength(list) {
-    console.log('list', list);
-    console.log('list length', list.length);
     return list ? list.length : undefined;
   }
 
