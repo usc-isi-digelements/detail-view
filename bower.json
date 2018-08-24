@@ -2,7 +2,7 @@
   "name": "detail-view",
   "description":
     "A Polymer Element showing details, extractions, images, and/or a button link.",
-  "version": "2.3.9",
+  "version": "2.3.10",
   "authors": ["Next Century Corporation"],
   "license": "Apache-2.0",
   "keywords": ["web-component", "polymer"],
